@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Gamma & Beta RNG Algorithms — Elijah DiFuria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#0d0d0d;--bg2:#141414;--bg3:#1a1a1a;--border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);--text:#f0ede8;--muted:#888;--accent:#c8f060;--accent2:#7dd3fc;--font:'Syne',sans-serif;--mono:'DM Mono',monospace;}
+html{scroll-behavior:smooth;}body{background:var(--bg);color:var(--text);font-family:var(--font);}
+nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.9);backdrop-filter:blur(14px);border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;}
+.nav-logo{font-size:15px;font-weight:700;letter-spacing:0.12em;color:var(--accent);font-family:var(--mono);text-decoration:none;}
+.nav-back{font-family:var(--mono);font-size:12px;color:var(--muted);text-decoration:none;transition:color 0.2s;letter-spacing:0.05em;}
+.nav-back:hover{color:var(--text);}
+.hero{padding:5rem 2rem 3.5rem;max-width:900px;margin:0 auto;border-bottom:0.5px solid var(--border);}
+.hero-tag{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:0.12em;margin-bottom:1.2rem;}
+.hero h1{font-size:clamp(2.2rem,6vw,4rem);font-weight:700;line-height:1.0;letter-spacing:-0.025em;}
+.hero-meta{margin-top:1.75rem;display:flex;gap:2.5rem;flex-wrap:wrap;}
+.meta-item{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.08em;}
+.meta-item span{color:var(--text);display:block;font-size:13px;margin-top:4px;font-family:var(--font);}
+.tag-row{margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:6px;}
+.tag{font-family:var(--mono);font-size:10px;padding:3px 9px;border:0.5px solid var(--border2);color:var(--muted);border-radius:2px;}
+.content{max-width:900px;margin:0 auto;padding:4rem 2rem 6rem;}
+.section{margin-bottom:4rem;}
+.sec-label{font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:0.14em;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem;}
+.sec-label::after{content:'';flex:1;height:0.5px;background:var(--border);}
+.section p{color:var(--muted);line-height:1.78;font-size:15px;margin-bottom:1rem;}
+.algo-stack{display:flex;flex-direction:column;gap:1px;background:var(--border);border:0.5px solid var(--border);}
+.algo-row{display:grid;grid-template-columns:200px 1fr;background:var(--bg2);transition:background 0.2s;}
+.algo-row:hover{background:var(--bg3);}
+.algo-left{padding:1.5rem;border-right:0.5px solid var(--border);}
+.algo-tag{font-family:var(--mono);font-size:10px;color:var(--accent2);letter-spacing:0.06em;margin-bottom:0.4rem;}
+.algo-name{font-size:1rem;font-weight:700;}
+.algo-range{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:0.25rem;}
+.algo-right{padding:1.5rem;font-size:13px;color:var(--muted);line-height:1.68;}
+.algo-right strong{color:var(--text);font-weight:500;}
+.ks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);border:0.5px solid var(--border);margin:1.5rem 0;}
+.ks-box{background:var(--bg2);padding:1.25rem;}
+.ks-tag{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:0.06em;margin-bottom:0.4rem;}
+.ks-val{font-size:1.6rem;font-weight:700;color:var(--accent);font-family:var(--mono);}
+.ks-label{font-size:11px;color:var(--muted);margin-top:0.25rem;}
+.insight-list{display:flex;flex-direction:column;}
+.insight-item{display:grid;grid-template-columns:32px 1fr;gap:1rem;padding:1.25rem 0;border-bottom:0.5px solid var(--border);}
+.insight-n{font-family:var(--mono);font-size:11px;color:var(--accent);padding-top:2px;}
+.insight-body{font-size:14px;color:var(--muted);line-height:1.68;}
+.insight-body strong{color:var(--text);font-weight:500;}
+.pdf-btn{display:inline-flex;align-items:center;gap:0.75rem;margin-top:1.25rem;padding:0.8rem 1.6rem;border:0.5px solid var(--border2);color:var(--text);text-decoration:none;font-family:var(--mono);font-size:12px;letter-spacing:0.07em;transition:border-color 0.2s,background 0.2s;}
+.pdf-btn:hover{border-color:var(--accent);background:rgba(200,240,96,0.05);}
+@media(max-width:650px){.hero{padding:3rem 1rem 2.5rem;}.content{padding:2.5rem 1rem 4rem;}.algo-row{grid-template-columns:1fr;}.algo-left{border-right:none;border-bottom:0.5px solid var(--border);}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">ED</a>
+  <a class="nav-back" href="index.html">← back</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">// Statistical Computing · Jan–Feb 2026 · Course Project</div>
+  <h1>Gamma & Beta<br>RNG Algorithms</h1>
+  <div class="hero-meta">
+    <div class="meta-item">COLLABORATORS<span>Gould, Funk, Jadbabaei</span></div>
+    <div class="meta-item">SOURCE<span>Dieter & Ahrens (1974)</span></div>
+    <div class="meta-item">VERIFICATION<span>10,000 samples · K-S test</span></div>
+  </div>
+  <div class="tag-row">
+    <span class="tag">R</span><span class="tag">Statistical Computing</span><span class="tag">Algorithm Design</span><span class="tag">Monte Carlo</span><span class="tag">Acceptance-Rejection</span><span class="tag">Simulation</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="section">
+    <div class="sec-label">Overview</div>
+    <p>Generating random variables from non-uniform distributions like the Gamma is computationally hard — no closed-form inverse CDF exists. This project reproduces the industrial-grade algorithms from Dieter & Ahrens (1974), the same paper behind R's internal <code style="font-family:var(--mono);font-size:13px;color:var(--accent2);">rgamma()</code> function.</p>
+    <p>The core insight: no single acceptance-rejection envelope can cover the full Gamma shape parameter domain <em>a ∈ (0, ∞)</em>. The solution is a master routing function that dynamically dispatches to three specialized algorithms based on the value of <em>a</em>, each optimized for its range.</p>
+  </div>
+
+  <div class="section">
+    <div class="sec-label">The Three Algorithms</div>
+    <div class="algo-stack">
+      <div class="algo-row">
+        <div class="algo-left">
+          <div class="algo-tag">// Algorithm GS</div>
+          <div class="algo-name">Piecewise Envelope</div>
+          <div class="algo-range">a ≤ 1</div>
+        </div>
+        <div class="algo-right">When <strong>a ≤ 1</strong>, the Gamma density has an asymptote at zero, making standard envelope construction impossible. GS bypasses this with a piecewise approach: a power-function proposal for the core region (0 ≤ x ≤ 1) and an exponential proposal for the tail (x > 1). Expected trials per accepted sample stays between 1.0 and 1.4 across all valid <em>a</em>.</div>
+      </div>
+      <div class="algo-row">
+        <div class="algo-left">
+          <div class="algo-tag">// Algorithm GC</div>
+          <div class="algo-name">Cauchy Envelope</div>
+          <div class="algo-range">1 &lt; a ≤ 2.53</div>
+        </div>
+        <div class="algo-right">Uses a Cauchy distribution as the majorizing envelope, centered at the Gamma's mode with scale chosen so the envelope touches the target at its peak. The threshold a = 2.53 is not a tuning choice — it is the exact value where the cubic discriminant in Lemma 3 becomes positive, below which GO's polynomial squeeze bounds are mathematically invalid.</div>
+      </div>
+      <div class="algo-row">
+        <div class="algo-left">
+          <div class="algo-tag">// Algorithm GO</div>
+          <div class="algo-name">Normal-Exponential Split</div>
+          <div class="algo-range">a &gt; 2.53</div>
+        </div>
+        <div class="algo-right">For large <em>a</em>, the Gamma approximates a normal. GO uses a Normal envelope for the core region and an Exponential envelope for the right tail, sampled with a fixed probability β = 0.009572 rather than computing the exact ratio at every call. Polynomial "squeeze bounds" from Lemma 3 allow 99%+ of proposals to be accepted or rejected without any expensive logarithm evaluations.</div>
+      </div>
+    </div>
+    <p style="margin-top:1.25rem;">A Beta generator was also implemented via the Gamma-ratio theorem: if X ~ Gamma(a) and Y ~ Gamma(b) independently, then X/(X+Y) ~ Beta(a,b).</p>
+  </div>
+
+  <div class="section">
+    <div class="sec-label">Verification — K-S Test Results</div>
+    <p>10,000 samples were generated for each algorithm and tested against the theoretical CDF using the Kolmogorov-Smirnov test. All p-values well above 0.05 — we fail to reject the null hypothesis that the samples match the theoretical distribution.</p>
+    <div class="ks-grid">
+      <div class="ks-box">
+        <div class="ks-tag">// GS · Gamma(a=0.5)</div>
+        <div class="ks-val">0.615</div>
+        <div class="ks-label">K-S p-value ✓</div>
+      </div>
+      <div class="ks-box">
+        <div class="ks-tag">// GC · Gamma(a=2.0)</div>
+        <div class="ks-val">0.629</div>
+        <div class="ks-label">K-S p-value ✓</div>
+      </div>
+      <div class="ks-box">
+        <div class="ks-tag">// GO · Gamma(a=10.0)</div>
+        <div class="ks-val">0.568</div>
+        <div class="ks-label">K-S p-value ✓</div>
+      </div>
+      <div class="ks-box">
+        <div class="ks-tag">// Beta(2.5, 5.0)</div>
+        <div class="ks-val">0.792</div>
+        <div class="ks-label">K-S p-value ✓</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-label">Key Insights</div>
+    <div class="insight-list">
+      <div class="insight-item">
+        <div class="insight-n">01</div>
+        <div class="insight-body"><strong>Algorithm boundaries are math, not parameters.</strong> The a = 2.53 threshold is the exact point where a cubic discriminant in Lemma 3 turns positive. Crossing it with the wrong algorithm produces subtly incorrect samples with no obvious error signal.</div>
+      </div>
+      <div class="insight-item">
+        <div class="insight-n">02</div>
+        <div class="insight-body"><strong>Squeeze bounds eliminate 99%+ of expensive operations.</strong> Instead of computing a full log-density ratio for every proposal, polynomial lower bounds accept or reject most samples in microseconds. The full evaluation is only reached for rare edge cases.</div>
+      </div>
+      <div class="insight-item">
+        <div class="insight-n">03</div>
+        <div class="insight-body"><strong>Statistical software is not monolithic.</strong> Functions like <code style="font-family:var(--mono);font-size:12px;color:var(--accent2);">rgamma()</code> are sophisticated routing wrappers, not single equations. Understanding the underlying proofs is what separates correct implementations from plausible-looking ones.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-label">Full Report</div>
+    <p>Includes full derivations of each algorithm, implementation code with commentary, and all K-S test outputs with distribution plots.</p>
+    <a class="pdf-btn" href="ejdifuria_4_GammaRNGmethodFINAL.pdf" target="_blank">↓ Download PDF</a>
+  </div>
+
+</div>
+</body>
+</html>
