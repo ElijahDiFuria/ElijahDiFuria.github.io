@@ -71,7 +71,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.9);backdrop-fil
 
   <div class="section">
     <div class="sec-label">Overview</div>
-    <p>Wikispeedia is an online game where players navigate from one Wikipedia article to another using only hyperlinks. This project treats the underlying hyperlink structure as a directed graph — each article is a node, each hyperlink a directed edge — and analyzes its structure, community formation, and statistical significance.</p>
+    <p>Wikispeedia is an online game where players navigate from one Wikipedia article to another using only hyperlinks. This project treats the underlying hyperlink structure as a directed graph where each article is a node and each hyperlink a directed edge. It analyzes its structure, community formation, and statistical significance.</p>
     <p>We generated four induced subgraphs of 200 randomly sampled nodes, applied three community detection algorithms, and ran a 1,000-iteration Monte Carlo null model test against the full network to confirm that the detected community structure is far stronger than chance.</p>
   </div>
 
@@ -85,7 +85,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.9);backdrop-fil
       <div class="stat-box"><div class="stat-num">22.1%</div><div class="stat-label">Reciprocity</div></div>
       <div class="stat-box"><div class="stat-num">p = 0</div><div class="stat-label">Monte Carlo p-value</div></div>
     </div>
-    <p>An average path length of 3.18 confirms small-world properties — most articles are reachable in just a few clicks, which is precisely what makes the game playable. The reciprocity of 22.1% reflects the tendency of related articles to cross-reference each other.</p>
+    <p>An average path length of 3.18 confirms small-world properties: most articles are reachable in just a few clicks, which is precisely what makes the game playable. The reciprocity of 22.1% reflects the tendency of related articles to cross-reference each other.</p>
   </div>
 
   <div class="section">
@@ -117,11 +117,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.9);backdrop-fil
     <div class="finding-list">
       <div class="finding-item">
         <div class="finding-n">01</div>
-        <div class="finding-body"><strong>Hub dominance.</strong> United States ranked first across all three centrality measures — in-degree (1,551), betweenness (1,982,737), and eigenvector centrality (1.000). A small set of broad articles serve as unavoidable waypoints regardless of navigation route.</div>
+        <div class="finding-body"><strong>Hub dominance.</strong> United States ranked first across all three centrality measures: in-degree (1,551), betweenness (1,982,737), and eigenvector centrality (1.000). A small set of broad articles serve as unavoidable waypoints regardless of navigation route.</div>
       </div>
       <div class="finding-item">
         <div class="finding-n">02</div>
-        <div class="finding-body"><strong>Heavy-tailed degree distribution.</strong> The in-degree distribution follows a power-law pattern on a log-log plot: a handful of articles absorb the vast majority of links while most have very few — characteristic of real-world information networks.</div>
+        <div class="finding-body"><strong>Heavy-tailed degree distribution.</strong> The in-degree distribution follows a power-law pattern on a log-log plot: a handful of articles absorb the vast majority of links while most have very few, which is characteristic of real-world information networks.</div>
       </div>
       <div class="finding-item">
         <div class="finding-n">03</div>
@@ -129,7 +129,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.9);backdrop-fil
       </div>
       <div class="finding-item">
         <div class="finding-n">04</div>
-        <div class="finding-body"><strong>Statistically significant structure.</strong> The Monte Carlo null model — 1,000 Erdős–Rényi random graphs with matched node and edge counts — produced a null distribution with maximum modularity well below the observed Q = 0.372. The result: p = 0. Community structure is not random.</div>
+        <div class="finding-body"><strong>Statistically significant structure.</strong> The Monte Carlo null model (1,000 Erdős–Rényi random graphs with matched node and edge counts) produced a null distribution with maximum modularity well below the observed Q = 0.372. The result: p = 0. Community structure is not random.</div>
       </div>
     </div>
   </div>

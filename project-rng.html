@@ -74,7 +74,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.9);backdrop-fil
 
   <div class="section">
     <div class="sec-label">Overview</div>
-    <p>Generating random variables from non-uniform distributions like the Gamma is computationally hard — no closed-form inverse CDF exists. This project reproduces the industrial-grade algorithms from Dieter & Ahrens (1974), the same paper behind R's internal <code style="font-family:var(--mono);font-size:13px;color:var(--accent2);">rgamma()</code> function.</p>
+    <p>Generating random variables from non-uniform distributions like the Gamma is computationally hard because no closed-form inverse CDF exists. This project reproduces the industrial-grade algorithms from Dieter & Ahrens (1974), the same paper behind R's internal <code style="font-family:var(--mono);font-size:13px;color:var(--accent2);">rgamma()</code> function.</p>
     <p>The core insight: no single acceptance-rejection envelope can cover the full Gamma shape parameter domain <em>a ∈ (0, ∞)</em>. The solution is a master routing function that dynamically dispatches to three specialized algorithms based on the value of <em>a</em>, each optimized for its range.</p>
   </div>
 
@@ -95,7 +95,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.9);backdrop-fil
           <div class="algo-name">Cauchy Envelope</div>
           <div class="algo-range">1 &lt; a ≤ 2.53</div>
         </div>
-        <div class="algo-right">Uses a Cauchy distribution as the majorizing envelope, centered at the Gamma's mode with scale chosen so the envelope touches the target at its peak. The threshold a = 2.53 is not a tuning choice — it is the exact value where the cubic discriminant in Lemma 3 becomes positive, below which GO's polynomial squeeze bounds are mathematically invalid.</div>
+        <div class="algo-right">Uses a Cauchy distribution as the majorizing envelope, centered at the Gamma's mode with scale chosen so the envelope touches the target at its peak. The threshold a = 2.53 is not a tuning choice. It is the exact value where the cubic discriminant in Lemma 3 becomes positive, below which GO's polynomial squeeze bounds are mathematically invalid.</div>
       </div>
       <div class="algo-row">
         <div class="algo-left">
@@ -110,8 +110,8 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.9);backdrop-fil
   </div>
 
   <div class="section">
-    <div class="sec-label">Verification — K-S Test Results</div>
-    <p>10,000 samples were generated for each algorithm and tested against the theoretical CDF using the Kolmogorov-Smirnov test. All p-values well above 0.05 — we fail to reject the null hypothesis that the samples match the theoretical distribution.</p>
+    <div class="sec-label">Verification: K-S Test Results</div>
+    <p>10,000 samples were generated for each algorithm and tested against the theoretical CDF using the Kolmogorov-Smirnov test. All p-values well above 0.05, so we fail to reject the null hypothesis that the samples match the theoretical distribution.</p>
     <div class="ks-grid">
       <div class="ks-box">
         <div class="ks-tag">// GS · Gamma(a=0.5)</div>

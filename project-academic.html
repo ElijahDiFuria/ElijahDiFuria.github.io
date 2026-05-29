@@ -76,13 +76,13 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.9);backdrop-fil
   <div class="section">
     <div class="sec-label">Overview</div>
     <p>How much does lifestyle actually affect academic performance? This project builds a multiple linear regression model to quantify the effect of six lifestyle and habit variables on student exam scores, testing three hypotheses about study time, mental health, and daily habits.</p>
-    <p>The dataset — 1,000 simulated-but-realistic student records from Kaggle — includes daily study hours, mental health rating, sleep, exercise, social media use, and Netflix time. All six predictors were found to be statistically significant with p &lt; 2×10⁻¹⁶.</p>
+    <p>The dataset (1,000 simulated-but-realistic student records from Kaggle) includes daily study hours, mental health rating, sleep, exercise, social media use, and Netflix time. All six predictors were found to be statistically significant with p &lt; 2×10⁻¹⁶.</p>
   </div>
 
   <div class="section">
     <div class="sec-label">Model Performance</div>
     <div class="stat-grid">
-      <div class="stat-box"><div class="stat-num">0.895</div><div class="stat-label">R² — variance explained</div></div>
+      <div class="stat-box"><div class="stat-num">0.895</div><div class="stat-label">R² variance explained</div></div>
       <div class="stat-box"><div class="stat-num">5.5</div><div class="stat-label">RMSE (points)</div></div>
       <div class="stat-box"><div class="stat-num">1,405</div><div class="stat-label">F-statistic</div></div>
       <div class="stat-box"><div class="stat-num">≈1.0</div><div class="stat-label">All VIF scores</div></div>
@@ -132,7 +132,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.9);backdrop-fil
     <div class="finding-list">
       <div class="finding-item">
         <div class="finding-n">01</div>
-        <div class="finding-body"><strong>Study time dominates all other predictors.</strong> Each additional hour of daily study adds ~9.6 points to exam scores. A student studying 4 hours versus 2 hours daily would score roughly 20 points higher — the difference between a C+ and an A−.</div>
+        <div class="finding-body"><strong>Study time dominates all other predictors.</strong> Each additional hour of daily study adds ~9.6 points to exam scores. A student studying 4 hours versus 2 hours daily would score roughly 20 points higher, roughly the difference between a C+ and an A−.</div>
       </div>
       <div class="finding-item">
         <div class="finding-n">02</div>
@@ -140,7 +140,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(13,13,13,0.9);backdrop-fil
       </div>
       <div class="finding-item">
         <div class="finding-n">03</div>
-        <div class="finding-body"><strong>Screen time has meaningful negative costs.</strong> Four hours of social media daily versus two hours is associated with a ~5-point lower score. Netflix shows a nearly identical penalty. These are not small effects — they compound across a semester.</div>
+        <div class="finding-body"><strong>Screen time has meaningful negative costs.</strong> Four hours of social media daily versus two hours is associated with a ~5-point lower score. Netflix shows a nearly identical penalty. These are not small effects either. They compound across a semester.</div>
       </div>
       <div class="finding-item">
         <div class="finding-n">04</div>
